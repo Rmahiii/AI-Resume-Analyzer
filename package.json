@@ -1,0 +1,23 @@
+{
+  "name": "resume-signal",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "apps/api",
+    "apps/web"
+  ],
+  "scripts": {
+    "dev": "concurrently -n api,web -c cyan,magenta \"yarn workspace @resume-signal/api dev\" \"yarn workspace @resume-signal/web dev\"",
+    "build": "yarn workspace @resume-signal/api build && yarn workspace @resume-signal/web build",
+    "test": "yarn workspace @resume-signal/api test",
+    "seed": "yarn workspace @resume-signal/api seed",
+    "lint": "yarn workspace @resume-signal/web lint"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "packageManager": "yarn@4.3.1",
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
