@@ -15,21 +15,24 @@ import { sanitizeMongo } from "./middleware/sanitizeMongo.js";
 
 export const app = express();
 
-const allowedOrigins = new Set([
+const allowedOrigins = [
+  "https://ai-resume-analyzer-web-six.vercel.app",
   env.CLIENT_URL,
   "http://localhost:5173",
   "http://127.0.0.1:5173"
-]);
+].filter(Boolean);
+
+const corsOptions = {
+  origin: allowedOrigins,
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+};
 
 app.set("trust proxy", 1);
 app.use(helmet());
-app.use(cors({
-  origin(origin, callback) {
-    if (!origin || allowedOrigins.has(origin)) return callback(null, true);
-    return callback(null, false);
-  },
-  credentials: true
-}));
+app.use(cors(corsOptions));
+app.options(/.*/, cors(corsOptions));
 app.use(compression());
 app.use(cookieParser());
 app.use(express.json({ limit: "1mb" }));
