@@ -21,6 +21,15 @@ if (!user) {
   await user.setPassword("DemoPassword123!");
   await user.save();
 }
+
+const personalEmail = "rmahi0773@gmail.com";
+let personalUser = await User.findOne({ email: personalEmail });
+if (!personalUser) {
+  personalUser = new User({ name: "R Mahi", email: personalEmail, role: "admin" });
+  await personalUser.setPassword("DemoPassword123!");
+  await personalUser.save();
+}
+
 const parsed = parseResumeText(resumeText);
 const deterministic = scoreResume({ resumeText, parsedResume: parsed, jobText });
 const resume = await Resume.create({
@@ -47,4 +56,5 @@ await Analysis.create({
   ai: { summary: "Seeded sample analysis for dashboard previews." }
 });
 console.log(`Seeded ${email} with password DemoPassword123!`);
+console.log(`Seeded ${personalEmail} with password DemoPassword123!`);
 process.exit(0);
