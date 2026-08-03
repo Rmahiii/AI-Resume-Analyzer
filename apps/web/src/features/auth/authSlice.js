@@ -6,26 +6,15 @@ const keepSession = (payload) => {
   return payload.user;
 };
 
-function requestMessage(error, fallback) {
-  return error.response?.data?.message || (error.message === "Network Error"
-    ? "Cannot reach the API. Start the backend and try again."
-    : fallback);
-}
-
-export const signup = createAsyncThunk("auth/signup", async (body, { rejectWithValue }) => {
-  try {
-    return keepSession((await api.post("/auth/signup", body)).data);
-  } catch (error) {
-    return rejectWithValue(requestMessage(error, "Sign up failed."));
-  }
-});
-export const login = createAsyncThunk("auth/login", async (body, { rejectWithValue }) => {
-  try {
-    return keepSession((await api.post("/auth/login", body)).data);
-  } catch (error) {
-    return rejectWithValue(requestMessage(error, "Sign in failed."));
-  }
-});
+export const signup = createAsyncThunk("auth/signup", async (body) =>
+  keepSession((await api.post("/auth/signup", body)).data)
+);
+export const login = createAsyncThunk("auth/login", async (body) =>
+  keepSession((await api.post("/auth/login", body)).data)
+);
+export const googleLogin = createAsyncThunk("auth/google", async (credential) =>
+  keepSession((await api.post("/auth/google", { credential })).data)
+);
 export const loadMe = createAsyncThunk("auth/me", async () => (await api.get("/auth/me")).data.user);
 export const logout = createAsyncThunk("auth/logout", async () => {
   await api.post("/auth/logout");
@@ -42,18 +31,18 @@ const authSlice = createSlice({
       .addCase(loadMe.rejected, (state) => { state.user = null; state.checked = true; })
       .addCase(logout.fulfilled, (state) => { state.user = null; state.checked = true; })
       .addMatcher(
-        (action) => ["auth/signup/pending", "auth/login/pending"].includes(action.type),
+        (action) => ["auth/signup/pending", "auth/login/pending", "auth/google/pending"].includes(action.type),
         (state) => { state.status = "loading"; state.error = ""; }
       )
       .addMatcher(
-        (action) => ["auth/signup/fulfilled", "auth/login/fulfilled"].includes(action.type),
+        (action) => ["auth/signup/fulfilled", "auth/login/fulfilled", "auth/google/fulfilled"].includes(action.type),
         (state, action) => { state.user = action.payload; state.status = "ready"; state.checked = true; }
       )
       .addMatcher(
-        (action) => ["auth/signup/rejected", "auth/login/rejected"].includes(action.type),
+        (action) => ["auth/signup/rejected", "auth/login/rejected", "auth/google/rejected"].includes(action.type),
         (state, action) => {
           state.status = "failed";
-          state.error = action.payload || action.error.message || "Authentication failed.";
+          state.error = action.error.message || "Authentication failed.";
         }
       );
   }

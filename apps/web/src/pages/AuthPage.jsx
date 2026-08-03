@@ -1,55 +1,22 @@
 import { motion } from "framer-motion";
-import { Github, Linkedin, LockKeyhole, Mail, UserRound } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Check, Clipboard, LockKeyhole, Mail, UserRound, Wand2 } from "lucide-react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
-import { SocialLoginButton } from "../components/SocialLoginButton.jsx";
+import { GoogleButton } from "../components/GoogleButton.jsx";
 import { login, signup } from "../features/auth/authSlice.js";
-import { oauthProviderConfig } from "../utils/oauthConfig.ts";
 
-function GoogleLogo() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" className="size-5">
-      <path
-        fill="#4285F4"
-        d="M21.6 12.23c0-.78-.07-1.53-.2-2.23H12v4.22h5.38a4.6 4.6 0 0 1-2 3.02v2.51h3.24c1.9-1.75 2.98-4.33 2.98-7.52Z"
-      />
-      <path
-        fill="#34A853"
-        d="M12 22c2.7 0 4.96-.9 6.62-2.43l-3.24-2.51c-.9.6-2.05.96-3.38.96-2.6 0-4.8-1.76-5.59-4.12H3.06v2.59A10 10 0 0 0 12 22Z"
-      />
-      <path
-        fill="#FBBC05"
-        d="M6.41 13.9A6 6 0 0 1 6.1 12c0-.66.11-1.3.31-1.9V7.51H3.06A10 10 0 0 0 2 12c0 1.61.39 3.14 1.06 4.49l3.35-2.59Z"
-      />
-      <path
-        fill="#EA4335"
-        d="M12 5.98c1.47 0 2.79.5 3.82 1.5l2.87-2.87C16.95 2.99 14.69 2 12 2a10 10 0 0 0-8.94 5.51l3.35 2.59C7.2 7.74 9.4 5.98 12 5.98Z"
-      />
-    </svg>
-  );
-}
-
-const socialProviders = [
-  { id: "google", icon: <GoogleLogo /> },
-  { id: "linkedin", icon: <Linkedin aria-hidden="true" size={20} className="text-[#0a66c2]" /> },
-  { id: "github", icon: <Github aria-hidden="true" size={20} /> }
-];
+const demoCredentials = {
+  email: "demo@resumesignal.com",
+  password: "Demo@123"
+};
 
 export function AuthPage({ mode }) {
   const dispatch = useDispatch();
   const { user, status, error } = useSelector((state) => state.auth);
   const [form, setForm] = useState({ name: "", email: "", password: "" });
-  const [toast, setToast] = useState("");
-  const [socialLoading, setSocialLoading] = useState("");
+  const [copied, setCopied] = useState(false);
   const isSignup = mode === "signup";
-
-  useEffect(() => {
-    if (!toast) return undefined;
-    const timeout = window.setTimeout(() => setToast(""), 3600);
-    return () => window.clearTimeout(timeout);
-  }, [toast]);
-
   if (user) return <Navigate to="/" replace />;
 
   const submit = (event) => {
@@ -57,22 +24,35 @@ export function AuthPage({ mode }) {
     dispatch(isSignup ? signup(form) : login({ email: form.email, password: form.password }));
   };
 
-  const handleSocialLogin = (provider) => {
-    const config = oauthProviderConfig[provider];
-
-    if (!config.enabled) {
-      setToast(config.unavailableMessage);
-      return;
+  const copyDemoCredentials = async () => {
+    const value = `Email: ${demoCredentials.email}\nPassword: ${demoCredentials.password}`;
+    if (navigator.clipboard) {
+      await navigator.clipboard.writeText(value);
+    } else {
+      const textArea = document.createElement("textarea");
+      textArea.value = value;
+      textArea.setAttribute("readonly", "");
+      textArea.style.position = "fixed";
+      textArea.style.opacity = "0";
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textArea);
     }
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 2000);
+  };
 
-    if (config.authUrl) {
-      setSocialLoading(provider);
-      window.location.assign(config.authUrl);
-    }
+  const useDemoAccount = () => {
+    setForm((current) => ({
+      ...current,
+      email: demoCredentials.email,
+      password: demoCredentials.password
+    }));
   };
 
   return (
-    <main className="grid min-h-screen place-items-center bg-[#eef2f6] p-4 dark:bg-[#0d131a]">
+    <main className="grid min-h-screen place-items-center bg-[#0d131a] p-4 text-slate-50">
       <motion.section
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -84,6 +64,39 @@ export function AuthPage({ mode }) {
             <h1 className="mt-5 max-w-xl text-4xl font-bold leading-tight">
               Resume intelligence built for recruiter filters and human decisions.
             </h1>
+            {!isSignup && (
+              <section className="mt-6 max-w-md rounded-2xl border border-[#6973ff]/25 bg-[#101821]/95 p-4 text-slate-100 shadow-lg shadow-[#06152f]/10">
+                <div className="flex flex-wrap items-start justify-between gap-3">
+                  <div>
+                    <p className="text-sm font-semibold text-blue-200">Try Demo</p>
+                    <p className="mt-1 text-xs text-slate-400">Use the seeded account to explore the analyzer.</p>
+                  </div>
+                  <span className="rounded-full border border-emerald-300/20 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-200">
+                    Ready to use
+                  </span>
+                </div>
+                <div className="mt-4 grid gap-2 rounded-xl border border-white/10 bg-white/[0.04] p-3 text-sm">
+                  <p className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                    <span className="text-slate-400">Email</span>
+                    <span className="font-semibold text-white">{demoCredentials.email}</span>
+                  </p>
+                  <p className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                    <span className="text-slate-400">Password</span>
+                    <span className="font-semibold text-white">{demoCredentials.password}</span>
+                  </p>
+                </div>
+                <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                  <button type="button" className="button-quiet" onClick={copyDemoCredentials}>
+                    {copied ? <Check size={16} /> : <Clipboard size={16} />}
+                    {copied ? "Copied" : "Copy Credentials"}
+                  </button>
+                  <button type="button" className="button-primary" onClick={useDemoAccount}>
+                    <Wand2 size={16} />
+                    Use Demo Account
+                  </button>
+                </div>
+              </section>
+            )}
           </div>
           <div className="grid grid-cols-3 gap-3 text-sm">
             {["ATS score", "Skill gaps", "Rewrite cues"].map((item) => (
@@ -114,45 +127,13 @@ export function AuthPage({ mode }) {
           <button className="button-primary" disabled={status === "loading"}>
             {isSignup ? "Create account" : "Sign in"}
           </button>
-          <div className="grid gap-3">
-            <div className="flex items-center gap-3 text-xs font-semibold uppercase text-zinc-400">
-              <span className="h-px flex-1 bg-zinc-200 dark:bg-white/10" />
-              Or continue with
-              <span className="h-px flex-1 bg-zinc-200 dark:bg-white/10" />
-            </div>
-            <div className="flex items-center justify-center gap-3">
-              {socialProviders.map(({ id, icon }) => {
-                const config = oauthProviderConfig[id];
-                return (
-                  <SocialLoginButton
-                    key={id}
-                    icon={icon}
-                    enabled={config.enabled}
-                    loading={socialLoading === id}
-                    label={config.label}
-                    loadingLabel={config.loadingLabel}
-                    disabledTooltip={config.disabledTooltip}
-                    onClick={() => handleSocialLogin(id)}
-                  />
-                );
-              })}
-            </div>
-          </div>
+          <GoogleButton />
           <div className="flex flex-wrap justify-between gap-2 text-sm text-zinc-600 dark:text-zinc-300">
             <Link to={isSignup ? "/login" : "/signup"}>{isSignup ? "Already registered?" : "Need an account?"}</Link>
             <Link to="/forgot-password">Forgot password</Link>
           </div>
         </form>
       </motion.section>
-      {toast && (
-        <div
-          role="status"
-          aria-live="polite"
-          className="fixed bottom-5 left-1/2 z-50 w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-[#17202a] shadow-2xl dark:border-white/10 dark:bg-[#18212b] dark:text-white"
-        >
-          {toast}
-        </div>
-      )}
     </main>
   );
 }

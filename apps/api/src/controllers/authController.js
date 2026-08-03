@@ -1,6 +1,5 @@
 import { OAuth2Client } from "google-auth-library";
 import { env } from "../config/env.js";
-import { hasGoogleOAuthConfig, passport } from "../config/passport.js";
 import { User } from "../models/User.js";
 import { AppError } from "../utils/appError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
@@ -76,32 +75,6 @@ export const googleLogin = asyncHandler(async (req, res) => {
   }
   return sendSession(res, user);
 });
-
-export function startGoogleOAuth(req, res, next) {
-  if (!hasGoogleOAuthConfig) {
-    return res.status(503).json({
-      message: "Google OAuth is not configured. Set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET."
-    });
-  }
-
-  return passport.authenticate("google", { scope: ["profile", "email"] })(req, res, next);
-}
-
-export function finishGoogleOAuth(req, res, next) {
-  if (!hasGoogleOAuthConfig) {
-    return res.status(503).json({
-      message: "Google OAuth is not configured. Set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET."
-    });
-  }
-
-  return passport.authenticate("google", { failureRedirect: `${env.CLIENT_URL}/login?oauth=failed` }, (error, user) => {
-    if (error) return next(error);
-    if (!user) return res.redirect(`${env.CLIENT_URL}/login?oauth=failed`);
-
-    const { accessToken } = sendSessionPayload(res, user);
-    return res.redirect(`${env.CLIENT_URL}/login?token=${encodeURIComponent(accessToken)}`);
-  })(req, res, next);
-}
 
 export const me = asyncHandler(async (req, res) => {
   res.json({ user: req.user.toSafeJSON() });

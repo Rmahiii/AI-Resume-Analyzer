@@ -4,8 +4,22 @@ export default {
   content: ["./index.html", "./src/**/*.{js,jsx}"],
   theme: {
     extend: {
+      colors: {
+        app: {
+          bg: "var(--color-bg)",
+          nav: "var(--color-nav)",
+          card: "var(--color-card)",
+          primary: "var(--color-primary)",
+          secondary: "var(--color-secondary)",
+          text: "var(--color-text-primary)",
+          muted: "var(--color-text-secondary)",
+          success: "var(--color-success)",
+          warning: "var(--color-warning)",
+          error: "var(--color-error)"
+        }
+      },
       boxShadow: {
-        panel: "0 18px 60px rgba(5, 12, 26, 0.18)"
+        panel: "none"
       }
     }
   },

@@ -1,5 +1,5 @@
-import { BarChart3, ChevronDown, FileSearch, History, LogOut, MoonStar, Shield, Sun, UserRound, WandSparkles } from "lucide-react";
-import { useEffect, useState } from "react";
+import { BarChart3, ChevronDown, FileSearch, History, LogOut, Shield, UserRound, WandSparkles } from "lucide-react";
+import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../features/auth/authSlice.js";
@@ -13,23 +13,22 @@ const links = [
 export function AppShell({ children }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
-  const [dark, setDark] = useState(() => localStorage.getItem("resume-signal-theme") === "dark");
 
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", dark);
-    localStorage.setItem("resume-signal-theme", dark ? "dark" : "light");
-  }, [dark]);
+    document.documentElement.classList.add("dark");
+    localStorage.setItem("resume-signal-theme", "dark");
+  }, []);
 
   return (
-    <div className="min-h-screen bg-[#06152f] text-slate-50">
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-white/90 shadow-[0_18px_50px_rgba(5,16,45,0.12)] backdrop-blur-xl dark:bg-[#06152f]/90">
+    <div className="min-h-screen bg-app-bg text-app-text">
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-app-nav/95 backdrop-blur-xl">
         <div className="mx-auto flex min-h-[88px] max-w-[1560px] items-center justify-between gap-4 px-5 md:px-8">
-          <NavLink to="/" className="flex items-center gap-3 text-[#07142d] dark:text-white">
-            <span className="grid h-10 w-10 place-items-center rounded-2xl bg-gradient-to-br from-[#5e6bff] to-[#42c8ff] text-white shadow-lg shadow-blue-500/25">
+          <NavLink to="/" className="flex items-center gap-3 text-app-text">
+            <span className="grid h-10 w-10 place-items-center rounded-2xl bg-gradient-to-br from-app-primary to-app-secondary text-app-text shadow-lg shadow-app-secondary/20">
               <WandSparkles size={21} />
             </span>
             <span className="text-xl font-black tracking-normal">
-              <span className="bg-gradient-to-r from-[#5e6bff] to-[#42c8ff] bg-clip-text text-transparent">Resume</span> Signal
+              <span className="bg-gradient-to-r from-app-primary to-app-secondary bg-clip-text text-transparent">Resume</span> Signal
             </span>
           </NavLink>
           <nav className="hidden items-center gap-2 lg:flex">
@@ -39,27 +38,24 @@ export function AppShell({ children }) {
                 to={to}
                 title={label}
                 className={({ isActive }) =>
-                  `button rounded-full px-4 text-[#07142d] hover:bg-blue-50 dark:text-slate-100 dark:hover:bg-white/10 ${isActive ? "bg-blue-50 text-[#4f5fff] dark:bg-white/10" : ""}`
+                  `button rounded-full px-4 text-app-text hover:-translate-y-0.5 hover:bg-white/10 ${isActive ? "bg-white/10 text-[#dbeafe]" : ""}`
                 }
               >
                 <Icon size={17} /> {label}
               </NavLink>
             ))}
             {user?.role === "admin" && (
-              <NavLink className="button rounded-full px-4 text-[#07142d] hover:bg-blue-50 dark:text-slate-100 dark:hover:bg-white/10" to="/admin">
+              <NavLink className="button rounded-full px-4 text-app-text hover:-translate-y-0.5 hover:bg-white/10" to="/admin">
                 <Shield size={17} /> Admin
               </NavLink>
             )}
-            <span className="button rounded-full px-4 text-[#07142d] dark:text-slate-100">Resources <ChevronDown size={16} /></span>
+            <span className="button rounded-full px-4 text-app-text">Resources <ChevronDown size={16} /></span>
           </nav>
           <div className="flex items-center gap-2">
-            <button className="button-quiet hidden w-10 rounded-full px-0 sm:inline-flex" title="Toggle dark mode" onClick={() => setDark(!dark)}>
-              {dark ? <Sun size={17} /> : <MoonStar size={17} />}
-            </button>
-            <button className="button hidden rounded-full border-0 text-[#07142d] hover:bg-blue-50 md:inline-flex dark:text-white dark:hover:bg-white/10" onClick={() => dispatch(logout())}>
+            <button className="button hidden rounded-full border-0 text-app-text hover:-translate-y-0.5 hover:bg-white/10 md:inline-flex" onClick={() => dispatch(logout())}>
               <UserRound size={18} /> Sign out
             </button>
-            <NavLink to="/" className="button rounded-full bg-gradient-to-r from-[#5965f8] to-[#6d79ff] px-5 text-white shadow-lg shadow-indigo-500/25 hover:scale-[1.02] hover:shadow-indigo-500/40">
+            <NavLink to="/" className="button rounded-full bg-app-primary px-5 text-app-text hover:-translate-y-0.5 hover:bg-[#5457dc]">
               Get Started Free
             </NavLink>
             <button className="button-quiet w-10 rounded-full px-0 md:hidden" title="Sign out" onClick={() => dispatch(logout())}>

@@ -5,6 +5,7 @@ import { JobDescription } from "../src/models/JobDescription.js";
 import { Analysis } from "../src/models/Analysis.js";
 import { parseResumeText } from "../src/services/resumeParser.js";
 import { scoreResume } from "../src/services/atsScorer.js";
+import { demoAccount, ensureDemoAccount } from "../src/services/demoAccount.js";
 
 const resumeText = `Maya Shah maya@example.com +91 99999 11111
 Skills React Node.js Express MongoDB Redis Docker
@@ -14,13 +15,7 @@ Projects Resume screening portal with JWT, PDF parsing, and Recharts analytics.`
 const jobText = "Full-stack engineer using React Node.js Express MongoDB Redis Docker CI/CD and ATS analytics.";
 
 await connectDatabase();
-const email = "demo@resumesignal.dev";
-let user = await User.findOne({ email });
-if (!user) {
-  user = new User({ name: "Demo Recruiter", email, role: "admin" });
-  await user.setPassword("DemoPassword123!");
-  await user.save();
-}
+const user = await ensureDemoAccount();
 
 const personalEmail = "rmahi0773@gmail.com";
 let personalUser = await User.findOne({ email: personalEmail });
@@ -55,6 +50,6 @@ await Analysis.create({
   ...deterministic,
   ai: { summary: "Seeded sample analysis for dashboard previews." }
 });
-console.log(`Seeded ${email} with password DemoPassword123!`);
+console.log(`Seeded ${demoAccount.email} with password ${demoAccount.password}`);
 console.log(`Seeded ${personalEmail} with password DemoPassword123!`);
 process.exit(0);
