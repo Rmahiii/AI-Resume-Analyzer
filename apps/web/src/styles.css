@@ -12,7 +12,7 @@
 }
 
 body {
-  @apply m-0 bg-[#f3f5f7] text-[#17202a] antialiased dark:bg-[#11161d] dark:text-slate-50;
+  @apply m-0 bg-[#06152f] text-[#17202a] antialiased dark:bg-[#06152f] dark:text-slate-50;
 }
 
 button, input, textarea {
@@ -26,21 +26,30 @@ button, input, textarea {
 
 @layer components {
   .panel {
-    @apply rounded-lg border border-slate-200/90 bg-white/85 shadow-panel backdrop-blur-xl dark:border-slate-700/80 dark:bg-[#18212b]/90;
+    @apply rounded-[24px] border border-slate-200/90 bg-white/90 shadow-panel backdrop-blur-xl dark:border-slate-700/80 dark:bg-[#18212b]/90;
   }
   .field {
-    @apply w-full rounded-lg border border-slate-300 bg-white/95 px-3 py-2 text-sm outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 dark:border-slate-600 dark:bg-[#101821];
+    @apply w-full rounded-2xl border border-slate-300 bg-white/95 px-4 py-3 text-sm text-[#17202a] outline-none transition placeholder:text-slate-400 focus:border-[#6973ff] focus:ring-2 focus:ring-[#6973ff]/25 dark:border-slate-600 dark:bg-[#101821] dark:text-slate-50;
   }
   .button {
-    @apply inline-flex min-h-10 items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-60;
+    @apply inline-flex min-h-10 items-center justify-center gap-2 rounded-2xl px-3 py-2 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-60;
   }
   .button-primary {
-    @apply button bg-blue-700 text-white hover:bg-blue-600;
+    @apply button bg-[#5965f8] text-white hover:bg-[#4654ef];
   }
   .button-quiet {
-    @apply button border border-slate-300 bg-white/80 hover:border-blue-400 hover:bg-blue-50 dark:border-slate-600 dark:bg-white/[0.05] dark:hover:border-blue-400 dark:hover:bg-blue-400/10;
+    @apply button border border-slate-300 bg-white/80 text-[#07142d] hover:border-[#6973ff] hover:bg-blue-50 dark:border-slate-600 dark:bg-white/[0.05] dark:text-white dark:hover:border-[#6973ff] dark:hover:bg-white/10;
+  }
+  .social-icon-button {
+    @apply inline-grid size-11 place-items-center rounded-full border border-slate-300 bg-white text-[#17202a] shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-[#6973ff] hover:bg-blue-50 active:translate-y-0 active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#6973ff]/30 disabled:cursor-wait disabled:opacity-70 dark:border-slate-600 dark:bg-white/[0.05] dark:text-white dark:hover:border-[#6973ff] dark:hover:bg-white/10;
+  }
+  .social-icon-button[aria-disabled="true"]:not(:disabled) {
+    @apply cursor-not-allowed opacity-45 hover:translate-y-0 hover:border-slate-300 hover:bg-white active:scale-100 dark:hover:border-slate-600 dark:hover:bg-white/[0.05];
   }
   .eyebrow {
-    @apply text-xs font-semibold uppercase text-blue-700 dark:text-blue-300;
+    @apply text-xs font-semibold uppercase text-[#5965f8] dark:text-blue-300;
+  }
+  .resume-heading {
+    @apply border-b border-slate-300 pb-1 text-[12px] font-black uppercase tracking-[0.08em] text-black;
   }
 }
