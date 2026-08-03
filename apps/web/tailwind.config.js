@@ -5,18 +5,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        app: {
-          bg: "var(--color-bg)",
-          nav: "var(--color-nav)",
-          card: "var(--color-card)",
-          primary: "var(--color-primary)",
-          secondary: "var(--color-secondary)",
-          text: "var(--color-text-primary)",
-          muted: "var(--color-text-secondary)",
-          success: "var(--color-success)",
-          warning: "var(--color-warning)",
-          error: "var(--color-error)"
-        }
+        "app-bg": "rgb(var(--color-bg-rgb) / <alpha-value>)",
+        "app-nav": "rgb(var(--color-nav-rgb) / <alpha-value>)",
+        "app-card": "rgb(var(--color-card-rgb) / <alpha-value>)",
+        "app-primary": "rgb(var(--color-primary-rgb) / <alpha-value>)",
+        "app-secondary": "rgb(var(--color-secondary-rgb) / <alpha-value>)",
+        "app-text": "rgb(var(--color-text-primary-rgb) / <alpha-value>)",
+        "app-muted": "rgb(var(--color-text-secondary-rgb) / <alpha-value>)",
+        "app-success": "rgb(var(--color-success-rgb) / <alpha-value>)",
+        "app-warning": "rgb(var(--color-warning-rgb) / <alpha-value>)",
+        "app-error": "rgb(var(--color-error-rgb) / <alpha-value>)"
       },
       boxShadow: {
         panel: "none"
