@@ -60,16 +60,16 @@ export function AnalyzerPage() {
               <div className="grid gap-3 rounded-[24px] border border-white/10 bg-white/[0.08] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] backdrop-blur md:grid-cols-2">
                 <label className="grid gap-2 text-sm font-semibold text-blue-50">
                   Role title
-                  <input className="field border-white/15 bg-white/95 text-slate-950 placeholder:text-slate-500" placeholder="Product Designer" value={job.jobTitle} onChange={(event) => setJob({ ...job, jobTitle: event.target.value })} />
+                  <input className="field border-white/15 bg-white/95 !text-slate-950 placeholder:!text-slate-500" placeholder="Product Designer" value={job.jobTitle} onChange={(event) => setJob({ ...job, jobTitle: event.target.value })} />
                 </label>
                 <label className="grid gap-2 text-sm font-semibold text-blue-50">
                   Company
-                  <input className="field border-white/15 bg-white/95 text-slate-950 placeholder:text-slate-500" placeholder="Notion" value={job.company} onChange={(event) => setJob({ ...job, company: event.target.value })} />
+                  <input className="field border-white/15 bg-white/95 !text-slate-950 placeholder:!text-slate-500" placeholder="Notion" value={job.company} onChange={(event) => setJob({ ...job, company: event.target.value })} />
                 </label>
                 <label className="grid gap-2 text-sm font-semibold text-blue-50 md:col-span-2">
                   Job description
                   <textarea
-                    className="field min-h-[116px] resize-y border-white/15 bg-white/95 text-slate-950 placeholder:text-slate-500"
+                    className="field min-h-[116px] resize-y border-white/15 bg-white/95 !text-slate-950 placeholder:!text-slate-500"
                     value={job.jobDescription}
                     onChange={(event) => setJob({ ...job, jobDescription: event.target.value })}
                     placeholder="Paste the responsibilities, qualifications, and keywords from the job post."
