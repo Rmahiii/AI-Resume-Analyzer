@@ -87,19 +87,19 @@ export function AnalyzerPage() {
                   </span>
                 ))}
               </div>
-              <div className="grid max-w-5xl gap-3 rounded-[24px] border border-white/10 bg-white/[0.07] p-4 shadow-[0_24px_80px_rgba(0,0,0,0.18)] backdrop-blur sm:grid-cols-2 xl:grid-cols-4">
+              <div className="grid max-w-5xl gap-3 rounded-[24px] border border-white/10 bg-white/[0.07] p-4 shadow-[0_24px_80px_rgba(0,0,0,0.18)] backdrop-blur sm:grid-cols-2 2xl:grid-cols-4">
                 {stats.map(({ label, value, icon: Icon }) => (
                   <motion.div
                     key={label}
                     whileHover={{ y: -4 }}
-                    className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.06] p-3"
+                    className="flex min-w-0 items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.06] p-4"
                   >
                     <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#5c63f1] to-[#233b8f] text-white shadow-lg shadow-indigo-500/25">
                       <Icon size={22} />
                     </span>
-                    <span>
-                      <strong className="block text-xl text-white">{value}</strong>
-                      <span className="text-sm text-blue-100/80">{label}</span>
+                    <span className="min-w-0">
+                      <strong className="block text-xl leading-tight text-white">{value}</strong>
+                      <span className="block text-sm leading-6 text-blue-100/80">{label}</span>
                     </span>
                   </motion.div>
                 ))}
