@@ -7,10 +7,10 @@ import { ResumeDropzone } from "../components/ResumeDropzone.jsx";
 import { runAnalysis } from "../features/analysis/analysisSlice.js";
 
 const stats = [
-  { label: "Resumes analyzed", value: "2M+", icon: Users },
-  { label: "Better interview rate", value: "30%", icon: TrendingUp },
-  { label: "ATS optimized", value: "Top rated", icon: ShieldCheck },
-  { label: "Privacy protected", value: "100%", icon: LockKeyhole }
+  { description: "analyzed", heading: "Resumes", value: "2M+", icon: Users },
+  { description: "interview rate", heading: "Better", value: "30%", icon: TrendingUp },
+  { description: "optimized", heading: "ATS", value: "Top rated", icon: ShieldCheck },
+  { description: "protected", heading: "Privacy", value: "100%", icon: LockKeyhole }
 ];
 
 const formats = ["PDF", "DOCX", "DOC", "TXT", "RTF", "HTML"];
@@ -34,7 +34,7 @@ export function AnalyzerPage() {
     <div className="bg-[#06152f]">
       <section className="relative mx-auto min-h-[calc(100vh-88px)] max-w-[1560px] overflow-hidden rounded-b-[34px] bg-gradient-to-br from-[#081B3A] via-[#092758] to-[#0F2E67] px-5 py-10 shadow-[0_35px_90px_rgba(0,0,0,0.35)] md:px-10 lg:px-16">
         <AnimatedGlow />
-        <div className="relative z-10 grid min-h-[calc(100vh-168px)] items-center gap-12 xl:grid-cols-[0.92fr_1.08fr]">
+        <div className="relative z-10 grid min-h-[calc(100vh-168px)] items-center gap-12 2xl:grid-cols-[0.92fr_1.08fr]">
           <motion.div
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
@@ -87,20 +87,22 @@ export function AnalyzerPage() {
                   </span>
                 ))}
               </div>
-              <div className="grid max-w-5xl gap-3 rounded-[24px] border border-white/10 bg-white/[0.07] p-4 shadow-[0_24px_80px_rgba(0,0,0,0.18)] backdrop-blur sm:grid-cols-2 2xl:grid-cols-4">
-                {stats.map(({ label, value, icon: Icon }) => (
+              <div className="grid max-w-5xl grid-cols-1 gap-4 rounded-[24px] border border-white/10 bg-white/[0.07] p-4 shadow-[0_24px_80px_rgba(0,0,0,0.18)] backdrop-blur sm:grid-cols-2 lg:grid-cols-4">
+                {stats.map(({ description, heading, value, icon: Icon }) => (
                   <motion.div
-                    key={label}
-                    whileHover={{ y: -4 }}
-                    className="flex min-w-0 items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.06] p-4"
+                    key={`${value}-${heading}`}
+                    whileHover={{ y: -4, scale: 1.015 }}
+                    transition={{ duration: 0.2, ease: "easeOut" }}
+                    className="grid h-[168px] min-w-0 place-items-center rounded-2xl border border-white/10 bg-white/[0.06] p-6 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-colors duration-200 hover:border-white/20 hover:bg-white/[0.09]"
                   >
-                    <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#5c63f1] to-[#233b8f] text-white shadow-lg shadow-indigo-500/25">
-                      <Icon size={22} />
-                    </span>
-                    <span className="min-w-0">
-                      <strong className="block text-xl leading-tight text-white">{value}</strong>
-                      <span className="block text-sm leading-6 text-blue-100/80">{label}</span>
-                    </span>
+                    <div className="flex h-full min-w-0 flex-col items-center justify-center">
+                      <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#5c63f1] to-[#233b8f] text-white shadow-lg shadow-indigo-500/25">
+                        <Icon size={23} />
+                      </span>
+                      <strong className="mt-4 block max-w-full whitespace-nowrap text-2xl font-black leading-none text-white">{value}</strong>
+                      <span className="mt-2 block max-w-full whitespace-nowrap text-base font-semibold leading-5 text-blue-50">{heading}</span>
+                      <span className="mt-1 block text-sm leading-6 text-blue-100/80">{description}</span>
+                    </div>
                   </motion.div>
                 ))}
               </div>
