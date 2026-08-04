@@ -95,11 +95,11 @@ export function AnalyzerPage() {
                     transition={{ duration: 0.2, ease: "easeOut" }}
                     className="flex min-h-[224px] min-w-0 flex-col items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] p-6 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-colors duration-200 hover:border-white/20 hover:bg-white/[0.09]"
                   >
-                    <div className="flex w-full min-w-0 flex-col items-center justify-center">
+                    <div className="flex w-full min-w-0 flex-col items-center justify-center px-1">
                       <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#5c63f1] to-[#233b8f] text-white shadow-lg shadow-indigo-500/25">
                         <Icon size={23} />
                       </span>
-                      <strong className="mt-5 block max-w-full whitespace-nowrap text-2xl font-black leading-none text-white">{value}</strong>
+                      <strong className="mt-5 block max-w-full whitespace-nowrap text-xl font-black leading-none text-white">{value}</strong>
                       <span className="mt-3 block max-w-full whitespace-nowrap text-base font-semibold leading-5 text-blue-50">{heading}</span>
                       <span className="mt-2 block max-w-full text-sm leading-6 text-blue-100/80">{description}</span>
                     </div>
