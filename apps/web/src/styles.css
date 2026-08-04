@@ -16,6 +16,16 @@
   --color-primary-rgb: 99 102 241;
   --color-secondary: #3b82f6;
   --color-secondary-rgb: 59 130 246;
+  --color-hero-start: #081B3A;
+  --color-hero-mid: #092758;
+  --color-hero-end: #0F2E67;
+  --color-accent-blue: #6ecbff;
+  --color-accent-blue-rgb: 110 203 255;
+  --color-accent-indigo: #5c63f1;
+  --color-accent-indigo-rgb: 92 99 241;
+  --color-accent-purple: #7a87ff;
+  --color-accent-gold: #ffe06b;
+  --color-cta-end: #6d78ff;
   --color-text-primary: #f8fafc;
   --color-text-primary-rgb: 248 250 252;
   --color-text-secondary: #94a3b8;
@@ -104,5 +114,23 @@ button, input, textarea {
   }
   .resume-heading {
     @apply border-b border-white/10 pb-1 text-[12px] font-black uppercase tracking-[0.08em] text-app-text;
+  }
+  .auth-input {
+    @apply h-14 w-full rounded-[18px] border border-white/10 bg-white/[0.08] px-4 py-3 text-sm font-semibold text-app-text outline-none transition duration-200 placeholder:text-app-muted/70 focus:bg-white/[0.11];
+  }
+  .auth-input:focus {
+    border-color: var(--color-accent-blue);
+    box-shadow: 0 0 0 2px rgb(var(--color-accent-blue-rgb) / 0.3), 0 0 32px rgb(var(--color-accent-indigo-rgb) / 0.16);
+  }
+  .auth-card {
+    @apply rounded-[24px] border border-white/10 bg-white/[0.08] shadow-[0_28px_90px_rgba(0,0,0,0.26)] backdrop-blur-xl;
+  }
+  .auth-glass {
+    @apply rounded-[24px] border border-white/10 bg-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] backdrop-blur;
+  }
+  .auth-radial-field {
+    background:
+      radial-gradient(circle at 20% 15%, rgb(var(--color-accent-blue-rgb) / 0.18), transparent 28%),
+      radial-gradient(circle at 80% 80%, rgb(var(--color-accent-indigo-rgb) / 0.18), transparent 30%);
   }
 }
