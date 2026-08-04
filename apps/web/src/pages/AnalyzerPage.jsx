@@ -111,7 +111,7 @@ export function AnalyzerPage() {
           <HeroResumeMockup />
         </div>
       </section>
-      <section className="mx-auto max-w-[1560px] bg-[#f4f7fb] px-5 py-10 text-[#17202a] md:px-10 lg:px-16 dark:bg-[#071227] dark:text-white">
+      <section className="mx-auto max-w-[1560px] bg-gradient-to-br from-[#081B3A] via-[#092758] to-[#0F2E67] px-5 py-10 text-white md:px-10 lg:px-16">
         <ReportPanel report={current} />
       </section>
     </div>
