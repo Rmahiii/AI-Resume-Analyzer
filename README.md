@@ -90,6 +90,17 @@ The analysis upload field is `resume`; accepted files are PDF and DOCX up to 5 M
 - Containers: copy env files and run `docker compose up --build`.
 - CI: GitHub Actions installs, tests ATS scoring, and builds both workspaces.
 
+### Vercel frontend + hosted API checklist
+
+If the deployed web app shows `Cannot reach the API`, the Vercel build is usually missing the backend URL.
+
+1. Deploy the API first on Render/Railway and confirm `https://your-api-host/api/v1/health` returns JSON.
+2. In Vercel, set `VITE_API_URL` to the versioned API URL, for example `https://your-api-host/api/v1`.
+3. Redeploy the Vercel project after changing `VITE_API_URL`; Vite reads this value at build time.
+4. In the API host, set `CLIENT_URL` to the Vercel app origin, for example `https://your-app.vercel.app`.
+
+Do not use `localhost` for either deployed value. On a phone, `localhost` means the phone itself, not your laptop or Render service.
+
 ## Production notes
 
 Use a strong `JWT_SECRET`, HTTPS origins, restricted Google OAuth origins, SMTP credentials from a secret manager, provider API keys with usage budgets, MongoDB indexes/backups, and external observability for logs/alerts. The deterministic ATS score is guidance, not a promise about a specific employer's ATS.

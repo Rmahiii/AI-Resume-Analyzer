@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { api } from "../../services/api.js";
+import { api, apiNetworkErrorMessage } from "../../services/api.js";
 
 function requestMessage(error, fallback) {
   return error.response?.data?.message || (error.message === "Network Error"
-    ? "Cannot reach the API. Start the backend and try again."
+    ? apiNetworkErrorMessage()
     : fallback);
 }
 

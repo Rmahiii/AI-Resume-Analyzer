@@ -1,7 +1,7 @@
 import { KeyRound, Mail } from "lucide-react";
 import { useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { api } from "../services/api.js";
+import { api, apiNetworkErrorMessage } from "../services/api.js";
 
 export function PasswordPage({ mode }) {
   const [params] = useSearchParams();
@@ -21,7 +21,7 @@ export function PasswordPage({ mode }) {
       const { data } = await api.post(reset ? "/auth/reset-password" : "/auth/forgot-password", body);
       setMessage(data.message || "Password updated. Return to the analyzer.");
     } catch (requestError) {
-      setError(requestError.response?.data?.message || "Cannot reach the API. Start the backend and try again.");
+      setError(requestError.response?.data?.message || apiNetworkErrorMessage());
     } finally {
       setSending(false);
     }

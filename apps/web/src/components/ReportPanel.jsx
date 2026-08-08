@@ -21,7 +21,7 @@ export function ReportPanel({ report }) {
       <section className="panel grid min-h-[360px] place-items-center p-6 text-center">
         <div>
           <p className="eyebrow">Report</p>
-          <h2 className="mt-2 text-2xl font-bold">Upload a resume to score it</h2>
+          <h2 className="mt-2 text-2xl font-bold text-white">Upload a resume to score it</h2>
         </div>
       </section>
     );

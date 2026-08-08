@@ -37,8 +37,6 @@
   --color-error: #ef4444;
   --color-error-rgb: 239 68 68;
   --chart-grid: rgba(148, 163, 184, 0.16);
-  --scrollbar-track: #0b1733;
-  --scrollbar-thumb: #334155;
 }
 
 .dark {
@@ -59,22 +57,11 @@ button, input, textarea {
 }
 
 * {
-  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  scrollbar-width: none;
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--scrollbar-track);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb);
-  border: 2px solid var(--scrollbar-track);
-  border-radius: 999px;
+  display: none;
 }
 
 ::selection {
@@ -84,8 +71,7 @@ button, input, textarea {
 
 @layer components {
   .panel {
-    @apply rounded-[20px] border bg-app-card text-app-text transition duration-200;
-    border-color: var(--color-card-border);
+    @apply rounded-[20px] border border-white/10 bg-white/[0.06] text-app-text transition duration-200;
   }
   .field {
     @apply w-full rounded-[18px] border bg-[#101827] px-4 py-3 text-sm text-app-text outline-none transition duration-200 placeholder:text-app-muted focus:border-app-primary focus:ring-2 focus:ring-app-primary;
